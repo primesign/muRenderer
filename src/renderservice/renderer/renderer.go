@@ -13,13 +13,13 @@ import (
 )
 
 // #cgo CFLAGS: -I./mupdf/include -I./mupdf/include/mupdf -I./mupdf/thirdparty/openjpeg -I./mupdf/thirdparty/jbig2dec -I./mupdf/thirdparty/zlib -I./mupdf/thirdparty/jpeg -I./mupdf/thirdparty/freetype
-// #cgo LDFLAGS: -L${SRCDIR}/mupdf/build/release -lmupdf -lopenjpeg -ljbig2dec -lz -lfreetype -ljpeg -lm
+// #cgo LDFLAGS: -L${SRCDIR}/mupdf/build/release/ -lmupdf -lmupdfthird -lm
 // #include <fitz.h>
 import "C"
 
 var (
 	// the fitz library version in use
-	fzVersion = C.CString("1.8")
+	fzVersion = C.CString("1.9a")
 	// gives filetype when opening stream
 	magic = C.CString("pdf")
 )
@@ -122,7 +122,7 @@ func (r *MuRenderer) renderPng(pageNr int, zoom float64) (io.Reader, error) {
 
 	C.fz_run_page(r.ctx, page, dev, &transform, nil)
 
-	buf := C.fz_new_png_from_pixmap(r.ctx, pix)
+	buf := C.fz_new_buffer_from_pixmap_as_png(r.ctx, pix)
 	pngBuf := C.GoBytes(unsafe.Pointer(buf.data), buf.len)
 	return bytes.NewReader(pngBuf), nil
 }
