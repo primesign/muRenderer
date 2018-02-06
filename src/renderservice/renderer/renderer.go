@@ -12,14 +12,14 @@ import (
 	log "github.com/Sirupsen/logrus"
 )
 
-// #cgo CFLAGS: -I./mupdf/include -I./mupdf/include/mupdf -I./mupdf/thirdparty/openjpeg -I./mupdf/thirdparty/jbig2dec -I./mupdf/thirdparty/zlib -I./mupdf/thirdparty/jpeg -I./mupdf/thirdparty/freetype
+// #cgo CFLAGS: -I./mupdf/include -I./mupdf/include/mupdf -I./mupdf/thirdparty/openjpeg -I./mupdf/thirdparty/jbig2dec -I./mupdf/thirdparty/zlib -I./mupdf/thirdparty/jpeg -I./mupdf/thirdparty/freetype -I./mupdf/thirdparty/freeglut
 // #cgo LDFLAGS: -L${SRCDIR}/mupdf/build/release/ -lmupdf -lmupdfthird -lm
 // #include <fitz.h>
 import "C"
 
 var (
 	// the fitz library version in use
-	fzVersion = C.CString("1.9a")
+	fzVersion = C.CString("1.12")
 	// gives filetype when opening stream
 	magic = C.CString("pdf")
 )
